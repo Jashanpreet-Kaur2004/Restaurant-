@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Page</title>
+    <style>
+        /* Navigation bar */
+        nav {
+            background-color: #232323;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+
+
+
+
+        /* Main content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Cart content styles */
+        .cart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .cart-item {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+
+        }
+
+        .cart-item span {
+            margin-right: 10px;
+        }
+
+        /* Customer information form styles */
+        form {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+        }
+
+        /* Submit button styles */
+        .submit-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 20px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            width: 200px;
+        }
+
+        .submit-button:hover {
+            background-color: #555;
+        }
+
+        .container {
+
+
+            width: 30vw;
+
+            margin: auto;
+            margin-bottom: 15vh;
+        }
+
+        .ordernow {
+
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border-radius: 20px;
+        }
+
+        .cart-items {
+            height: 20vw;
+            max-width: 40%;
+            overflow: auto;
+            margin: auto;
+        }
+
+        .cartcontent {
+
+
+            margin: auto;
+            display: flex;
+
+            justify-content: center;
+            margin-bottom: 5vh;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./menu.html">Menu</a></li>
+            <li><a href="./cart.html">Cart</a></li>
+            <li><a href="./order.html">Order</a></li>
+            <li><a href="./kitchenstaff.html"> kitchen staff</a></li>
+
+        </ul>
+    </nav>
+    <h1>Order Page</h1>
+    <h2 class="cartcontent">Cart Content</h2>
+    <ul class="cart-items">
+        <!-- Cart items will be dynamically added here via JavaScript -->
+    </ul>
+    <div class="container">
+        <h2>Customer Information</h2>
+        <form id="order-form">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="first-name" required>
+            <br>
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="last-name" required>
+            <br>
+            <input type="submit" class="ordernow" value="Submit Order">
+        </form>
+    </div>
+    <script>
+        // Retrieve the cart items from local storage
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Get the cart items container
+        const cartItemsContainer = document.querySelector('.cart-items');
+
+        // Loop through the cart items and create a row for each item
+        cartItems.forEach((item, index) => {
+            // Create a new list item for the cart
+            const cartItem = document.createElement('li');
+            cartItem.classList.add('cart-item');
+
+            // Create a span for the item name
+            const itemName = document.createElement('span');
+            itemName.innerText = item.name;
+            cartItem.appendChild(itemName);
+
+            // Create a span for the item price
+            const itemPrice = document.createElement('span');
+            itemPrice.innerText = `$${item.price}`;
+            cartItem.appendChild(itemPrice);
+
+            // Add the cart item to the container
+            cartItemsContainer.appendChild(cartItem);
+        });
+
+        // Add an event listener to the order form that stores the order in local storage
+        const orderForm = document.querySelector('#order-form');
+        orderForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const firstName = document.querySelector('#first-name').value;
+            const lastName = document.querySelector('#last-name').value;
+            const order = {
+                customer: {
+                    firstName,
+                    lastName,
+                },
+                items: cartItems,
+                status: 'pending',
+                orderNumber: Date.now(),
+            };
+            // Retrieve previous orders from local storage
+            const previousOrders = JSON.parse(localStorage.getItem('orders')) || [];
+            // Check if previousOrders is an array
+            if (!Array.isArray(previousOrders)) {
+                // If not, create an empty array
+                previousOrders = [];
+            }
+            // Add the new order to the array
+            previousOrders.push(order);
+            // Store the updated orders array in local storage
+            localStorage.setItem('orders', JSON.stringify(previousOrders));
+            // Redirect to kitchen staff page
+            window.location.href = 'kitchenstaff.html';
+        });
+
+
+    </script>
+
+</body>
+
+</html>

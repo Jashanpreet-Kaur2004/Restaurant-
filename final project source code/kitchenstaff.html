@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Order Listing Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        /* Navigation bar */
+        nav {
+            background-color: #232323;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+
+
+
+
+        /* Main content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .order-list {
+            margin: 20px;
+            padding: 0;
+            list-style: none;
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+
+        .order-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .order-item h2 {
+            margin-top: 0;
+        }
+
+        .order-item ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .order-item li {
+            margin-right: 10px;
+            padding: 5px 10px;
+            background-color: #eee;
+            border-radius: 5px;
+        }
+
+        .order-item .status {
+            text-align: right;
+        }
+
+        .order-item .status.pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .order-item .status.ready {
+            color: green;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 600px) {
+            .order-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .order-item ul {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./menu.html">Menu</a></li>
+            <li><a href="./cart.html">Cart</a></li>
+            <li><a href="./order.html">Order</a></li>
+            <li><a href="./kitchenstaff.html"> kitchen staff</a></li>
+
+        </ul>
+    </nav>
+    <h1>Order Listing</h1>
+
+    <ul class="order-list">
+        <!-- Order items will be dynamically added here -->
+    </ul>
+
+    <script>
+        // Retrieve the order list from local storage
+        const orderList = JSON.parse(localStorage.getItem('orders')) || [];
+        console.log(orderList)
+
+        // Get the container for the order list
+        const orderListContainer = document.querySelector('.order-list');
+
+        // Loop through each order in the list
+        orderList.forEach(order => {
+            // Create a new list item for the order
+            const orderItem = document.createElement('li');
+            orderItem.classList.add('order-item');
+
+            // Create a heading for the order
+            const orderHeading = document.createElement('h2');
+            orderHeading.innerText = `Order for ${order.customer.firstName} ${order.customer.lastName}`;
+            orderItem.appendChild(orderHeading);
+
+            // Create a list for the food items
+            const foodList = document.createElement('ul');
+            foodList.classList.add('food-list');
+
+            // Loop through the food items and create a list item for each one
+            order.items.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerText = `${item.name} - $${item.price}`;
+                foodList.appendChild(listItem);
+            });
+
+            orderItem.appendChild(foodList);
+
+            // Add the order item to the container
+            orderListContainer.appendChild(orderItem);
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,370 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+    <title> Jashan Restaurant Menu - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Navigation bar */
+        nav {
+            background-color: #232323;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+
+
+
+
+        /* Main content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #232323;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer p {
+            font-size: 1.2em;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+
+        }
+
+        /* Style for footer section */
+        footer {
+            background-color: #212121;
+            color: #fff;
+            padding: 30px 0;
+            font-size: 14px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-col {
+            flex-basis: 33.33%;
+            padding: 0 20px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-col p,
+        .footer-col ul {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .footer-col li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        .social-links li {
+            margin-right: 10px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .social-links a:hover {
+            color: #f00;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .menu-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .menu-item p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .menu-item span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e87722;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .product h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .product p {
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .add-to-cart:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./menu.html">Menu</a></li>
+            <li><a href="./cart.html">Cart</a></li>
+            <li><a href="./order.html">Order</a></li>
+            <li><a href="./kitchenstaff.html"> kitchen staff</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Products Menu</h1>
+        <div class="products-grid"></div>
+    </div>
+
+    <script>// Define the menu items
+
+        const storedMenuItems = JSON.parse(localStorage.getItem('menuItems')) || [
+            {
+                name: "Grilled Salmon",
+                image: "./banner3.jpg",
+                description: "Freshly grilled salmon with a side of steamed vegetables",
+                price: 18.99,
+            },
+            {
+                name: "Margherita Pizza",
+                image: "./products/pic2.jpg",
+                description: "Classic margherita pizza with tomato sauce, fresh mozzarella, and basil",
+                price: 12.99
+            },
+            {
+                name: "Chicken Alfredo",
+                image: "./products/pic3.jpg",
+                description: "Creamy fettuccine alfredo with grilled chicken",
+                price: 14.99
+            },
+            {
+                name: "Vegetable Stir Fry",
+                image: "./products/pic4.jpg",
+                description: "Assorted vegetables stir fried to perfection with your choice of sauce",
+                price: 11.99
+            },
+            {
+                name: "Beef Burger",
+                image: "./products/pic5.jpg",
+                description: "Juicy beef burger with lettuce, tomato, and onion on a sesame seed bun",
+                price: 9.99
+            },
+        ];
+        console.log("name " + "product.name" + storedMenuItems + " name");
+        const productsGrid = document.querySelector('.products-grid');
+
+        storedMenuItems.forEach(product => {
+            console.log("name " + product.name);
+            const productItem = document.createElement('div');
+            productItem.className = 'product';
+            productItem.innerHTML = `
+    <img src="${product.image}" alt="${product.name}">
+    <h2>${product.name}</h2>
+    <p>${product.description}</p>
+    <p>${product.price}$</p>
+    <button class="add-to-cart" data-name="${product.name}" data-price="${product.price}">Add to Cart</button>`;
+            productsGrid.appendChild(productItem);
+        });
+
+        // Add event listener to add to cart button
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', addToCartClicked);
+        });
+
+        // Function to handle add to cart button click
+        function addToCartClicked(event) {
+            const button = event.target;
+            const name = button.dataset.name;
+            const price = button.dataset.price;
+            addToCart(name, price);
+        }
+
+        // Function to add item to cart
+        // Function to add item to cart
+        function addToCart(name, price) {
+            console.log(`Added ${name} to cart for ${price}$`);
+
+            // Check if there are any items in the cart already
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Add the new item to the cart
+            cartItems.push({
+                name: name,
+                price: price
+            });
+
+            // Store the updated cart items in local storage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            // You can also update the UI cart display here
+        }
+        let temp=JSON.parse(localStorage.getItem('cartItems'));
+         console.log(temp)
+
+
+    </script>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Us</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et sapien a nulla bibendum eleifend at
+                    at dui. Sed nec libero massa. Duis vel dolor vitae ex posuere sagittis.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>8658 Avenue Jarry</li>
+                    <li>Montreal, Quebec H3N4K4</li>
+                    <li>Phone: (123) 456-7890</li>
+                    <li>Email: jashanpreet@restaurant.com</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jashan Restaurant . All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
